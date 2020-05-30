@@ -8,19 +8,24 @@ const Layout = () => {
   const [inData, setInData] = useState([]);
   const [outData, setOutData] = useState([]);
   const [modalData, setModalData] = useState({ active: false, vehicle: null });
-
+  const [space,setSpace] = useState(40)
   const socket = io("http://127.0.0.1:4001");
   socket.on("inData", data => {
     console.log(data);
     setInData([data, ...inData]);
+    setSpace(space-1);
   });
   socket.on("outData", data => {
     console.log(data);
     setOutData([data, ...outData]);
+    setSpace(space+1);
   });
   socket.on("securityForm", vehicle => {
     setModalData({ active: true, vehicle });
   });
+
+  
+
 
   return (
     <>
@@ -65,7 +70,7 @@ const Layout = () => {
                   <div className="tile box is-child notification is-warning ">
                     <div>
                       <p className="title  has-text-dark">Available space</p>
-                      20
+                      {space}
                     </div>
                   </div>
                 </div>
