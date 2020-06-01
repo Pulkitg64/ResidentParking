@@ -261,8 +261,8 @@ app.post("/security/out", async (req, res) => {
 
 
 app.post("/security/form", [
-  check('Name'.isLength({ min: 3 })),
-  // check('Mobile Number').isMobilePhone()
+  check(req.body.name.isLength({ min: 3 })),
+  check(req.body.mobile).isMobilePhone()
 ], async (req, res) => {
 
   console.log(req.body);
