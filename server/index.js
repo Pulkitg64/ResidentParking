@@ -260,30 +260,22 @@ app.post("/security/out", async (req, res) => {
 });
 
 
-<<<<<<< HEAD
 app.post("/security/form"
-, [
-  //check('Name'.isLength({ min: 3 })),
-  check('Mobile Number').isMobilePhone()
-]
-, async (req, res) => {
-=======
-app.post("/security/form", [
-  check(req.body.name.isLength({ min: 3 })),
-  check(req.body.mobile).isMobilePhone()
-], async (req, res) => {
->>>>>>> 756961467f1071eb5d89be055cf368895e5e326a
+, 
+//[
+//   check('name').isLength({ min: 3 }),
+//   check('mobile').isLength({ min: 10,max:10 })
+// ], 
+async (req, res) => {
 
+  // var name = req.body.name
+  // var mobile = req.body.mobile
   console.log(req.body);
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() })
-  }
-<<<<<<< HEAD
-  console.log("AGAIB",req.body);
-=======
-
->>>>>>> 756961467f1071eb5d89be055cf368895e5e326a
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+    
+  //   return res.status(422).json({ errors: errors.array() })
+  // }
   //TODO Handle notification
   let message = [
     {
