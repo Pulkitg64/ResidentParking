@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dbConfig = require("./config/dbConfig");
 const { Expo } = require("expo-server-sdk");
+const {check, validationResult} = require('express-validator');
 
 let expo = new Expo();
 let pushToken = null;
@@ -259,9 +260,17 @@ app.post("/security/out", async (req, res) => {
 });
 
 
-app.post("/security/form", async (req, res) => {
-  console.log(req.body);
+app.post("/security/form", [
+  check('Name'.isLength({ min: 3 })),
+  check('Mobile Number').isMobilePhone()
+], async (req, res) => {
 
+  console.log(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() })
+  }
+  
   //TODO Handle notification
   let message = [
     {
