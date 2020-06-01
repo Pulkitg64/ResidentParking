@@ -123,6 +123,8 @@ const unAuthSchema = new mongoose.Schema({
 
 const UnAuth = mongoose.model("UnAuth", unAuthSchema);
 
+
+
 const inOutSchema = new mongoose.Schema({
   vehicle: String,
   guest_id: {
@@ -145,6 +147,8 @@ const InOut = mongoose.model("InOut", inOutSchema);
 app.get("/test", (req, res) => {
   res.send("Connected");
 });
+
+
 app.get('/resident',(req,res)=>{
   Resident.find({}).then(data=>{
       res.send(data)
@@ -154,6 +158,8 @@ app.get('/resident',(req,res)=>{
   
   
 })
+
+
 app.get('/guest',(req,res)=>{
   Guest.find({}).then(data=>{
       res.send(data)
@@ -183,8 +189,6 @@ app.post("/resident",function(req,res){
   }).catch(function(err){
     console.log(err)
   })
-  
-  
 })
 
 app.post("/guest",function(req,res){
@@ -204,9 +208,8 @@ app.post("/guest",function(req,res){
   }).catch(function(err){
     console.log(err)
   })
-  
-  
 })
+
 app.post("/security/in", async (req, res) => {
   console.log(req.body);
   const { vehicle } = req.body;
@@ -256,10 +259,12 @@ app.post("/security/out", async (req, res) => {
   res.send("Succesfull");
 });
 
+
 app.post("/security/form", [
   check('Name'.isLength({ min: 3 })),
   // check('Mobile Number').isMobilePhone()
 ], async (req, res) => {
+
   console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -287,11 +292,14 @@ app.post("/security/form", [
   res.send('HERE')
 });
 
+
 app.post("/expo/token", (req, res) => {
   console.log(req.body);
   pushToken = req.body;
   res.send("Succesfull");
 });
+
+
 
 app.get("/expo/sendMessage", async (req, res) => {
   console.log(pushToken.token);

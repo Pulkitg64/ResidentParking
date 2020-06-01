@@ -9,6 +9,7 @@ const Layout = () => {
   const [outData, setOutData] = useState([]);
   const [modalData, setModalData] = useState({ active: false, vehicle: null });
   const [space,setSpace] = useState(40)
+  
   const socket = io("http://127.0.0.1:4001");
   socket.on("inData", data => {
     console.log(data);

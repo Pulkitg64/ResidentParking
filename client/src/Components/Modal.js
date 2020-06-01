@@ -5,7 +5,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
   const [formData, setFormData] = useState({
     name: null,
     mobile: null,
-    address: null
+    address: null,
   });
 
   const getActiveClass = () => {
@@ -13,8 +13,9 @@ const Modal = ({ active = false, toggle, vehicle }) => {
   };
 
   const handleSubmit = async () => {
+    setFormData({ ...formData, vehicles: vehicle });
     console.log(formData);
-    await axios.post("http://localhost:4001/security/form", formData);
+    await axios.post("http://localhost:4001/security/form", {...formData,vehicle});
     toggle();
   };
 
@@ -83,7 +84,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
               <input
                 class="input is-success"
                 type="text"
-                placeholder="Email Address"
+                placeholder="Flat Number"
                 value={formData.address}
                 onChange={e => {
                   setFormData({ ...formData, address: e.target.value });
