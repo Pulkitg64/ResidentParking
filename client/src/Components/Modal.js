@@ -5,7 +5,6 @@ const Modal = ({ active = false, toggle, vehicle }) => {
   const [formData, setFormData] = useState({
     name: null,
     mobile: null,
-    address: null,
   });
 
   const getActiveClass = () => {

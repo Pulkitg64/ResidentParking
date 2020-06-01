@@ -260,17 +260,19 @@ app.post("/security/out", async (req, res) => {
 });
 
 
-app.post("/security/form", [
-  check('Name'.isLength({ min: 3 })),
+app.post("/security/form"
+, [
+  //check('Name'.isLength({ min: 3 })),
   check('Mobile Number').isMobilePhone()
-], async (req, res) => {
+]
+, async (req, res) => {
 
   console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() })
   }
-  
+  console.log("AGAIB",req.body);
   //TODO Handle notification
   let message = [
     {
