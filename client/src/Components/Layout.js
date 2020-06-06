@@ -3,12 +3,14 @@ import Webcam from "react-webcam";
 import io from "socket.io-client";
 import InOutScrollable from "./InOutScrollable";
 import Modal from "./Modal";
+import pendingScrollable from './pendingScrollable'
 
 const Layout = () => {
   const [inData, setInData] = useState([]);
   const [outData, setOutData] = useState([]);
   const [modalData, setModalData] = useState({ active: false, vehicle: null });
   const [space,setSpace] = useState(40)
+  const [notifiedData, setNotifiedData] = useState([]);
   
   const socket = io("http://127.0.0.1:4001");
   socket.on("inData", data => {
@@ -25,6 +27,9 @@ const Layout = () => {
     setModalData({ active: true, vehicle });
   });
 
+  socket.on("notify",data=>{
+    setNotifiedData([data, ...notifiedData]);
+  })
   
 
 
@@ -59,6 +64,7 @@ const Layout = () => {
                 <div className="tile is-parent">
                   <div className="tile box is-child notification is-warning ">
                     <p className="title ">Current pending</p>
+                    <pendingScrollable type="in" key="in" scrollData={notifiedData} />
                   </div>
                 </div>
                 <div className="tile is-parent is-vertical">

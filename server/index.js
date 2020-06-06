@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const dbConfig = require("./config/dbConfig");
 const { Expo } = require("expo-server-sdk");
 
+
 let expo = new Expo();
 let pushToken = null;
 
@@ -154,8 +155,6 @@ app.get('/resident',(req,res)=>{
   }).catch(err=>{
       console.log(err)
   })
-  
-  
 })
 
 
@@ -165,9 +164,17 @@ app.get('/guest',(req,res)=>{
   }).catch(err=>{
       console.log(err)
   })
-  
-  
 })
+
+app.get('/inout',(req,res)=>{
+  InOut.find({}).then(data=>{
+      res.send(data)
+  }).catch(err=>{
+      console.log(err)
+  })
+})
+
+
 
 app.post("/resident",function(req,res){
 
@@ -244,6 +251,38 @@ app.post("/security/in", async (req, res) => {
 });
 
 
+app.post("/notification", async (req, res) => {
+
+ // console.log(req.body)
+  const {status} = req.body;
+
+  // if(status ==='Accept')
+  // {
+  //   console.log(req.body)
+  //   const guest = new Guest({
+  //     name: req.body.name,
+  //     phone: req.body.phone,
+  //     vehicle: req.body.vehicle,
+  //     address: req.body.address,
+  //     resident_id: req.body.resident
+  //   })
+  //   guest.save()
+  //   .then(function(data){
+  //     console.log(data)
+  //     res.send("Success")
+  //   }).catch(function(err){
+  //     console.log(err)
+  //   })
+
+  //   io.emit("notify", req.body);
+  // }
+  // else if(status==='Reject')
+  // {
+  //   io.emit("notify", req.body);
+  // }
+
+});
+
 
 app.post("/security/out", async (req, res) => {
   const { vehicle } = req.body;
@@ -259,13 +298,9 @@ app.post("/security/out", async (req, res) => {
 });
 
 
-
 app.post("/security/form", async (req, res) => {
-
   console.log(req.body);
-
-
-
+ 
   //TODO Handle notification
   let message = [
     {
@@ -274,7 +309,7 @@ app.post("/security/form", async (req, res) => {
       body: "Accept request",
       data: req.body
     }
-  ];
+  ];  
   if (!Expo.isExpoPushToken(pushToken.token)) {
     console.error(`Push token ${pushToken} is not a valid Expo push token`);
   }
