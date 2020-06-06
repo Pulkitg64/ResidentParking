@@ -259,9 +259,12 @@ app.post("/security/out", async (req, res) => {
 });
 
 
+
 app.post("/security/form", async (req, res) => {
 
   console.log(req.body);
+
+
 
   //TODO Handle notification
   let message = [
