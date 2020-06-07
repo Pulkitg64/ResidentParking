@@ -1,7 +1,8 @@
 import React from "react";
 import moment from "moment";
 
-const pendingScrollable = ({ type, scrollData }) => {
+const PendingScrollable = ({ type, scrollData }) => {
+  console.log('PENDING SCROLLABLE',scrollData)
   const tileColorClass =
     type === "in"
       ? "tile is-child box notification is-info"
@@ -12,7 +13,7 @@ const pendingScrollable = ({ type, scrollData }) => {
       ? "table has-background-info is-fullwidth has-text-white-ter "
       : "table has-background-danger is-fullwidth has-text-white-ter ";
 
-  const renderList = () => {
+  const renderList = (scrollData) => {
     return scrollData.map(dat => {
       return (
         <tr key={dat.vehicle}>
@@ -45,11 +46,11 @@ const pendingScrollable = ({ type, scrollData }) => {
             <th>Address</th>
             <th>Status</th>
           </thead>
-          <tbody>{renderList()}</tbody>
+          <tbody>{renderList(scrollData)}</tbody>
         </table>
       </div>
     </div>
   );
 };
 
-export default pendingScrollable;
+export default PendingScrollable;

@@ -127,6 +127,7 @@ const UnAuth = mongoose.model("UnAuth", unAuthSchema);
 
 const inOutSchema = new mongoose.Schema({
   vehicle: String,
+  address: String,
   guest_id: {
     type: mongoose.Types.ObjectId,
     ref: "Guest",
@@ -227,7 +228,8 @@ app.post("/security/in", async (req, res) => {
     const inOut = await InOut.create({
       resident_id: resident._id,
       vehicle,
-      name: resident.name
+      name: resident.name,
+      address: resident.address
     });
     io.emit("inData", { ...inOut._doc });
   } else {
@@ -238,49 +240,48 @@ app.post("/security/in", async (req, res) => {
       const inOut = await InOut.create({
         guest_id: guest._id,
         vehicle,
-        name: guest.name
+        name: guest.name,
+        address: guest.address
       });
       io.emit("inData", { ...inOut._doc });
     } else {
       //! Handle resident
       io.emit("securityForm", vehicle);
     }
-  }
+  } 
 
   res.send("Succesfull");
 });
 
 
 app.post("/notification", async (req, res) => {
-
- // console.log(req.body)
+  console.log('NOTIFICATION BODY')
+  console.log(req.body)
   const {status} = req.body;
 
-  // if(status ==='Accept')
-  // {
-  //   console.log(req.body)
-  //   const guest = new Guest({
-  //     name: req.body.name,
-  //     phone: req.body.phone,
-  //     vehicle: req.body.vehicle,
-  //     address: req.body.address,
-  //     resident_id: req.body.resident
-  //   })
-  //   guest.save()
-  //   .then(function(data){
-  //     console.log(data)
-  //     res.send("Success")
-  //   }).catch(function(err){
-  //     console.log(err)
-  //   })
-
-  //   io.emit("notify", req.body);
-  // }
-  // else if(status==='Reject')
-  // {
-  //   io.emit("notify", req.body);
-  // }
-
+  if(status ==='Accept')
+  {
+      console.log('ACCEPETED',req.body)
+      const guest = new Guest({
+        name: req.body.name,
+        phone: req.body.phone,
+        vehicle: req.body.vehicle,
+        address: req.body.address,
+        resident_id: req.body.resident
+      })
+      guest.save()
+      .then(function(data){
+        console.log(data)
+        res.send("Success")
+      }).catch(function(err){
+        console.log(err)
+      })
+  }
+  else if(status==='Reject')
+  {
+    console.log('REJECT')
+  }
+  io.emit("notify", req.body);
 });
 
 
