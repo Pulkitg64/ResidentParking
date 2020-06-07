@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+const chalk = require('chalk');
+
 
 const Modal = ({ active = false, toggle, vehicle }) => {
   const [formData, setFormData] = useState({
     name: null,
     mobile: null,
-    address: null
   });
 
   const getActiveClass = () => {
@@ -13,10 +14,48 @@ const Modal = ({ active = false, toggle, vehicle }) => {
   };
 
   const handleSubmit = async () => {
+    setFormData({ ...formData, vehicles: vehicle });
     console.log(formData);
-    await axios.post("http://localhost:4001/security/form", formData);
-    toggle();
+    if(phonenumber()==false || checkName()==false)
+    {
+        console.log(formData);
+    }
+    else{
+      await axios.post("http://localhost:4001/security/form", {...formData,vehicle});
+      toggle();
+    }   
   };
+
+  const phonenumber =()=>{
+
+    var phoneno = /^\d{10}$/;
+    var mobile=document.getElementById("mobileNumber").value;
+   if(mobile.match(phoneno))
+   {
+       return true;
+   }
+   else
+   {
+       alert(chalk.bold("ENTER VALID MOBILE NUMBER!"));
+       return false;
+   }
+ 
+ }
+
+ const checkName = ()=>{
+
+  var name=document.getElementById("nameCheck").value;
+  if(name.length != 0)
+  {
+    return true;
+  }
+  else{
+    alert(chalk.bold("THE NAME FIELD CANNOT BE EMPTY!"));
+    return false;
+  }
+
+}
+
 
   return (
     <div className={getActiveClass()}>
@@ -46,6 +85,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
             <label class="label">Name</label>
             <div class="control has-icons-left">
               <input
+                id="nameCheck"
                 class="input is-success"
                 type="text"
                 placeholder="Enter Name"
@@ -64,6 +104,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
             <label class="label">Mobile Number</label>
             <div class="control has-icons-left">
               <input
+                id="mobileNumber"
                 class="input is-success"
                 type="number"
                 placeholder="Enter Mobile Number"
@@ -83,7 +124,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
               <input
                 class="input is-success"
                 type="text"
-                placeholder="Email Address"
+                placeholder="Flat Number"
                 value={formData.address}
                 onChange={e => {
                   setFormData({ ...formData, address: e.target.value });

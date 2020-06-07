@@ -9,6 +9,7 @@ const dbConfig = require("./config/dbConfig");
 const { Expo } = require("expo-server-sdk");
 const {check,validatonResult} = require("express-validator");
 
+
 let expo = new Expo();
 let pushToken = null;
 
@@ -123,6 +124,8 @@ const unAuthSchema = new mongoose.Schema({
 
 const UnAuth = mongoose.model("UnAuth", unAuthSchema);
 
+
+
 const inOutSchema = new mongoose.Schema({
   vehicle: String,
   guest_id: {
@@ -145,24 +148,34 @@ const InOut = mongoose.model("InOut", inOutSchema);
 app.get("/test", (req, res) => {
   res.send("Connected");
 });
+
+
 app.get('/resident',(req,res)=>{
   Resident.find({}).then(data=>{
       res.send(data)
   }).catch(err=>{
       console.log(err)
   })
-  
-  
 })
+
+
 app.get('/guest',(req,res)=>{
   Guest.find({}).then(data=>{
       res.send(data)
   }).catch(err=>{
       console.log(err)
   })
-  
-  
 })
+
+app.get('/inout',(req,res)=>{
+  InOut.find({}).then(data=>{
+      res.send(data)
+  }).catch(err=>{
+      console.log(err)
+  })
+})
+
+
 
 app.post("/resident",function(req,res){
 
@@ -183,8 +196,6 @@ app.post("/resident",function(req,res){
   }).catch(function(err){
     console.log(err)
   })
-  
-  
 })
 
 app.post("/guest",function(req,res){
@@ -204,9 +215,8 @@ app.post("/guest",function(req,res){
   }).catch(function(err){
     console.log(err)
   })
-  
-  
 })
+
 app.post("/security/in", async (req, res) => {
   console.log(req.body);
   const { vehicle } = req.body;
@@ -242,6 +252,38 @@ app.post("/security/in", async (req, res) => {
 });
 
 
+app.post("/notification", async (req, res) => {
+
+ // console.log(req.body)
+  const {status} = req.body;
+
+  // if(status ==='Accept')
+  // {
+  //   console.log(req.body)
+  //   const guest = new Guest({
+  //     name: req.body.name,
+  //     phone: req.body.phone,
+  //     vehicle: req.body.vehicle,
+  //     address: req.body.address,
+  //     resident_id: req.body.resident
+  //   })
+  //   guest.save()
+  //   .then(function(data){
+  //     console.log(data)
+  //     res.send("Success")
+  //   }).catch(function(err){
+  //     console.log(err)
+  //   })
+
+  //   io.emit("notify", req.body);
+  // }
+  // else if(status==='Reject')
+  // {
+  //   io.emit("notify", req.body);
+  // }
+
+});
+
 
 app.post("/security/out", async (req, res) => {
   const { vehicle } = req.body;
@@ -256,6 +298,7 @@ app.post("/security/out", async (req, res) => {
   res.send("Succesfull");
 });
 
+<<<<<<< HEAD
 app.post("/security/form",[
   check(req.body.name).isLength({ min:3 }),
   check(req.body.mobile).isMobilePhone()
@@ -267,6 +310,12 @@ app.post("/security/form",[
     return res.status(422).json({ errors: errors.array() })
   }
 
+=======
+
+app.post("/security/form", async (req, res) => {
+  console.log(req.body);
+ 
+>>>>>>> upstream/master
   //TODO Handle notification
   let message = [
     {
@@ -275,7 +324,7 @@ app.post("/security/form",[
       body: "Accept request",
       data: req.body
     }
-  ];
+  ];  
   if (!Expo.isExpoPushToken(pushToken.token)) {
     console.error(`Push token ${pushToken} is not a valid Expo push token`);
   }
@@ -288,11 +337,14 @@ app.post("/security/form",[
   res.send('HERE')
 });
 
+
 app.post("/expo/token", (req, res) => {
   console.log(req.body);
   pushToken = req.body;
   res.send("Succesfull");
 });
+
+
 
 app.get("/expo/sendMessage", async (req, res) => {
   console.log(pushToken.token);
