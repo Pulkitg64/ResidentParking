@@ -3,13 +3,8 @@ import Webcam from "react-webcam";
 import io from "socket.io-client";
 import InOutScrollable from "./InOutScrollable";
 import Modal from "./Modal";
-<<<<<<< HEAD
-import PendingScrollable from "./PendingScrollable";
-
-=======
 import PendingScrollable from './PendingScrollable'
 const socket = io("http://127.0.0.1:4001");
->>>>>>> upstream/master
 const Layout = () => {
   const [inData, setInData] = useState([]);
   const [outData, setOutData] = useState([]);
@@ -69,14 +64,7 @@ const Layout = () => {
               </div>
               <div className="tile">
                 <div className="tile is-parent">
-<<<<<<< HEAD
-                  <div className="tile box is-child notification is-warning ">
-                    <p className="title ">Current Pending</p>
-                    <PendingScrollable type="in" key="in" scrollData={notifiedData} />
-                  </div>
-=======
                 <PendingScrollable type="Status of Request" scrollData={notifiedData} />
->>>>>>> upstream/master
                 </div>
                 <div className="tile is-parent is-vertical">
                   <div className="tile box is-child notification is-warning ">
