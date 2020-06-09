@@ -2,10 +2,6 @@ import React from "react";
 import moment from "moment";
 
 const PendingScrollable = ({ type, scrollData }) => {
-<<<<<<< HEAD
-=======
-  console.log('PENDING SCROLLABLE',scrollData)
->>>>>>> upstream/master
   const tileColorClass =
     type === "in"
       ? "tile is-child box notification is-info"
