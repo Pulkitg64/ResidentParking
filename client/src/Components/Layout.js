@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import io from "socket.io-client";
 import InOutScrollable from "./InOutScrollable";
 import Modal from "./Modal";
-import pendingScrollable from './pendingScrollable'
+import PendingScrollable from "./PendingScrollable";
 
 const Layout = () => {
   const [inData, setInData] = useState([]);
@@ -63,20 +63,20 @@ const Layout = () => {
               <div className="tile">
                 <div className="tile is-parent">
                   <div className="tile box is-child notification is-warning ">
-                    <p className="title ">Current pending</p>
-                    <pendingScrollable type="in" key="in" scrollData={notifiedData} />
+                    <p className="title ">Current Pending</p>
+                    <PendingScrollable type="in" key="in" scrollData={notifiedData} />
                   </div>
                 </div>
                 <div className="tile is-parent is-vertical">
                   <div className="tile box is-child notification is-warning ">
                     <div>
-                      <p className="title has-text-dark">Total parking space</p>
+                      <p className="title has-text-dark">Total Parking Space</p>
                       40
                     </div>
                   </div>
                   <div className="tile box is-child notification is-warning ">
                     <div>
-                      <p className="title  has-text-dark">Available space</p>
+                      <p className="title  has-text-dark">Available Space</p>
                       {space}
                     </div>
                   </div>

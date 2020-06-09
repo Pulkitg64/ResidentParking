@@ -257,30 +257,31 @@ app.post("/notification", async (req, res) => {
  // console.log(req.body)
   const {status} = req.body;
 
-  // if(status ==='Accept')
-  // {
-  //   console.log(req.body)
-  //   const guest = new Guest({
-  //     name: req.body.name,
-  //     phone: req.body.phone,
-  //     vehicle: req.body.vehicle,
-  //     address: req.body.address,
-  //     resident_id: req.body.resident
-  //   })
-  //   guest.save()
-  //   .then(function(data){
-  //     console.log(data)
-  //     res.send("Success")
-  //   }).catch(function(err){
-  //     console.log(err)
-  //   })
+  if(status ==='Accept')
+  {
+    console.log(req.body)
+    const guest = new Guest({
+      name: req.body.name,
+      phone: req.body.phone,
+      vehicle: req.body.vehicle,
+      address: req.body.address,
+      resident_id: req.body.resident
+    })
+    guest.save()
+    .then(function(data){
+      console.log(data)
+      res.send("Success")
+    }).catch(function(err){
+      console.log(err)
+    })
 
-  //   io.emit("notify", req.body);
-  // }
-  // else if(status==='Reject')
-  // {
-  //   io.emit("notify", req.body);
-  // }
+    io.emit("notify", req.body);
+  }
+  else if(status==='Reject')
+  {
+    console.log("We have entered reject!");
+    io.emit("notify", req.body);
+  }
 
 });
 
@@ -368,13 +369,23 @@ app.get("/expo/sendMessage", async (req, res) => {
   res.send("/lol");
 });
 
-// Connecting a user through socket
-io.on("connection", socket => {
-  console.log("a user connected");
-  socket.on("disconnect", () => {
-    console.log("User is disconnected");
+// // Connecting a user through socket
+// io.on("connection", socket => {
+//   console.log("a user connected");
+//   socket.on("disconnect", () => {
+//     console.log("User is disconnected");
+//   });
+// });
+
+
+// For deployment setup
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-});
+}
 
 const port = process.env.PORT || 4001;
 server.listen(port, () => console.log(`Listening on port ${port}`));
