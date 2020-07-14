@@ -21,7 +21,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
         console.log(formData);
     }
     else{
-      await axios.post("http://localhost:4001/security/form", {...formData,vehicle});
+      await axios.post("http://52.70.136.68:4001//security/form", {...formData,vehicle});
       toggle();
     }   
   };
@@ -62,7 +62,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">UnAuthorzed Vehicle</p>
+          <p className="modal-card-title">UnAuthorized Vehicle</p>
         </header>
         <section className="modal-card-body">
           <div class="field">

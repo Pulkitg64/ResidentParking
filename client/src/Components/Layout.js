@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import InOutScrollable from "./InOutScrollable";
 import Modal from "./Modal";
 import PendingScrollable from './PendingScrollable'
-const socket = io("http://127.0.0.1:4001");
+const socket = io("http://52.70.136.68:4001/");
 const Layout = () => {
   const [inData, setInData] = useState([]);
   const [outData, setOutData] = useState([]);
