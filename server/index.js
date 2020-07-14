@@ -1,5 +1,6 @@
 // Initializing imports
-const app = require("express")();
+const express = require("express");
+const app = express();
 const server = require("http").createServer(app);
 var cors = require("cors");
 const io = require("socket.io")(server);
