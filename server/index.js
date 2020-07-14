@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dbConfig = require("./config/dbConfig");
 const { Expo } = require("expo-server-sdk");
+const {check,validatonResult} = require("express-validator");
 
 
 let expo = new Expo();
@@ -261,6 +262,32 @@ app.post("/notification", async (req, res) => {
 
   if(status ==='Accept')
   {
+<<<<<<< HEAD
+    console.log(req.body)
+    const guest = new Guest({
+      name: req.body.name,
+      phone: req.body.phone,
+      vehicle: req.body.vehicle,
+      address: req.body.address,
+      resident_id: req.body.resident
+    })
+    guest.save()
+    .then(function(data){
+      console.log(data)
+      res.send("Success")
+    }).catch(function(err){
+      console.log(err)
+    })
+
+    io.emit("notify", req.body);
+  }
+  else if(status==='Reject')
+  {
+    console.log("We have entered reject!");
+    io.emit("notify", req.body);
+  }
+
+=======
       console.log('ACCEPETED',req.body)
       const guest = new Guest({
         name: req.body.name,
@@ -282,6 +309,7 @@ app.post("/notification", async (req, res) => {
     console.log('REJECT')
   }
   io.emit("notify", req.body);
+>>>>>>> upstream/master
 });
 
 
@@ -298,10 +326,24 @@ app.post("/security/out", async (req, res) => {
   res.send("Succesfull");
 });
 
+<<<<<<< HEAD
+app.post("/security/form",[
+  check(req.body.name).isLength({ min:3 }),
+  check(req.body.mobile).isMobilePhone()
+] ,async (req, res) => {
+  console.log(req.body);
+
+  const errors = validatonResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() })
+  }
+
+=======
 
 app.post("/security/form", async (req, res) => {
   console.log(req.body);
  
+>>>>>>> upstream/master
   //TODO Handle notification
   let message = [
     {
@@ -354,13 +396,23 @@ app.get("/expo/sendMessage", async (req, res) => {
   res.send("/lol");
 });
 
-// Connecting a user through socket
-io.on("connection", socket => {
-  console.log("a user connected");
-  socket.on("disconnect", () => {
-    console.log("User is disconnected");
+// // Connecting a user through socket
+// io.on("connection", socket => {
+//   console.log("a user connected");
+//   socket.on("disconnect", () => {
+//     console.log("User is disconnected");
+//   });
+// });
+
+
+// For deployment setup
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-});
+}
 
 const port = process.env.PORT || 4001;
 server.listen(port, () => console.log(`Listening on port ${port}`));

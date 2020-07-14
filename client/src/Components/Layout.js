@@ -69,13 +69,13 @@ const Layout = () => {
                 <div className="tile is-parent is-vertical">
                   <div className="tile box is-child notification is-warning ">
                     <div>
-                      <p className="title has-text-dark">Total parking space</p>
+                      <p className="title has-text-dark">Total Parking Space</p>
                       40
                     </div>
                   </div>
                   <div className="tile box is-child notification is-warning ">
                     <div>
-                      <p className="title  has-text-dark">Available space</p>
+                      <p className="title  has-text-dark">Available Space</p>
                       {space}
                     </div>
                   </div>

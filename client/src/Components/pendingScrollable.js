@@ -2,7 +2,6 @@ import React from "react";
 import moment from "moment";
 
 const PendingScrollable = ({ type, scrollData }) => {
-  console.log('PENDING SCROLLABLE',scrollData)
   const tileColorClass =
     type === "in"
       ? "tile is-child box notification is-info"
@@ -18,13 +17,9 @@ const PendingScrollable = ({ type, scrollData }) => {
       return (
         <tr key={dat.vehicle}>
           <th className="has-text-white-ter">{dat.vehicle}</th>
-          {/* <td>{dat.guest_id ? "No" : "Yes"}</td> */}
           <td>{dat.name}</td>
           <td>{dat.address}</td>
           <td>{dat.status}</td>
-          {/* <td>
-            {moment(type === "in" ? dat.in_time : dat.out_time).format("LTS")}
-          </td> */}
         </tr>
       );
     });
