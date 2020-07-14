@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import io from "socket.io-client";
 import InOutScrollable from "./InOutScrollable";
 import Modal from "./Modal";
-import PendingScrollable from './PendingScrollable'
+import PendingScrollable from './pendingScrollable'
 const socket = io("http://52.70.136.68:4001/");
 const Layout = () => {
   const [inData, setInData] = useState([]);

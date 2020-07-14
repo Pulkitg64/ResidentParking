@@ -19,7 +19,7 @@ endTime = datetime.datetime.now() + datetime.timedelta(minutes=3/10)
   
 list1 =[]
 #Paste the installed location of tesseract below(line no. 22) in place of "C:\Program Files\Tesseract-OCR\tesseract.exe"
-pytesseract.pytesseract.tesseract_cmd=r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd=r"Tesseract-OCR\tesseract.exe"
 
 def get_grayscale(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -186,8 +186,8 @@ vid=cv2.VideoCapture(0)
 
 while(True):
   
-    if datetime.datetime.now() >= endTime:
-        break
+ #   if datetime.datetime.now() >= endTime:
+  #      break
     ret,image = vid.read()
     if ret==True:
         Width = image.shape[1]
@@ -247,7 +247,15 @@ while(True):
                 cv2.imwrite("object-detection"+str(k)+".jpg", roi)
                 k=k+1
         cv2.imshow("object detection", image)
+        print('length',len(list1))
         
+        if(len(list1)>10):
+            test1 =(mode(list1))
+            url = 'http://52.70.136.68:4001/security/in'
+            body = {'vehicle': test1}
+            headers = {'content-type': 'application/json'}
+            requests.post(url, data=json.dumps(body), headers=headers)
+            list1 = []
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     else:
@@ -256,9 +264,9 @@ vid.release()
 cv2.destroyAllWindows()
 
 #BELOW CODE SEND THE MOST FREQUENT NUMBER FROM THE LIST1 TO THE WEB SERVER WHERE DATABASE IS MAINTAINED FOR ENTRY OR EXIT OF VEHICLES
-test1 =(mode(list1))
+#test1 =(mode(list1))
 
-url = 'http://54.92.192.196:4001/security/in'
-body = {'vehicle': test1}
-headers = {'content-type': 'application/json'}
-requests.post(url, data=json.dumps(body), headers=headers)
+#url = 'http://54.92.192.196:4001/security/in'
+#body = {'vehicle': test1}
+#headers = {'content-type': 'application/json'}
+#requests.post(url, data=json.dumps(body), headers=headers)
