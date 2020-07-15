@@ -16,7 +16,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
   const handleSubmit = async () => {
     setFormData({ ...formData, vehicles: vehicle });
     console.log(formData);
-    if(phonenumber()==false || checkName()==false)
+    if(phonenumber()===false || checkName()===false)
     {
         console.log(formData);
     }
@@ -45,7 +45,7 @@ const Modal = ({ active = false, toggle, vehicle }) => {
  const checkName = ()=>{
 
   var name=document.getElementById("nameCheck").value;
-  if(name.length != 0)
+  if(name.length !== 0)
   {
     return true;
   }

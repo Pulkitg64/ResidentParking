@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dbConfig = require("./config/dbConfig");
 const { Expo } = require("expo-server-sdk");
+const spawn = require('child_process').spawn
+const path = require('path');
 const {check,validatonResult} = require("express-validator");
 
 
@@ -91,6 +93,22 @@ app.use(
 // findNode();
 
 // Initializing models
+
+
+
+app.get('/detect',(req,res)=>{
+  
+  console.log('Inside ML MODEL')
+  var spawn = require('child_process').spawn
+
+  var process = spawn('python',["./ML/finalcode.py"])
+  process.stdout.on('data',function(data){
+      var text = data.toString('utf8')
+      console.log(text)
+  })
+  console.log('OUTSIDE ML MODELv')
+  res.send('HI')
+})
 
 const residentSchema = new mongoose.Schema({
   name: String,
