@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const dbConfig = require("./config/dbConfig");
 const { Expo } = require("expo-server-sdk");
 const spawn = require('child_process').spawn
-const path = require('path');
+
 const {check,validatonResult} = require("express-validator");
 
 
