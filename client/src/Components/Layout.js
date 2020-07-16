@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import InOutScrollable from "./InOutScrollable";
 import Modal from "./Modal";
 import PendingScrollable from './pendingScrollable'
-import axios from "axios";
+
 const socket = io("http://52.70.136.68:4001/");
 const Layout = () => {
   const [inData, setInData] = useState([]);
@@ -34,9 +34,6 @@ const Layout = () => {
     setNotifiedData([data, ...notifiedData]);
   })
   
-  const handleSubmit = async () => {
-    await axios.get("http://52.70.136.68:4001/detect");
-  };
 
   return (
     <>
@@ -62,10 +59,7 @@ const Layout = () => {
                 style={{ textAlign: "center", flex: 3 }}
               >
                 <div className="tile box is-child notification is-primary ">
-                  {/* <Webcam style={{ height: "100%" }} /> */}
-                  <button className="button is-success" onClick={handleSubmit}>
-                    Start the Program
-                </button>
+                  <Webcam style={{ height: "100%" }} /> 
                 </div>
               </div>
               <div className="tile">
